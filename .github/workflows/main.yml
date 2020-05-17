@@ -44,11 +44,10 @@ jobs:
                 libasound2-dev \
                 libglu1-mesa-dev \
                 mesa-common-dev \
+                ninja-build \
                 python3-pip
             python3 -m pip install --upgrade pip
-            python3 -m pip install \
-                meson \
-                ninja
+            python3 -m pip install meson
             export CC=gcc-9
             export CXX=g++-9
             export platform=unix
@@ -90,11 +89,10 @@ jobs:
             libasound2-dev \
             libglu1-mesa-dev \
             mesa-common-dev \
+            ninja-build \
             python3-pip
         sudo python3 -m pip install --upgrade pip
-        sudo python3 -m pip install \
-            meson \
-            ninja
+        sudo python3 -m pip install meson
 
     - uses: actions/checkout@v2
       with:
