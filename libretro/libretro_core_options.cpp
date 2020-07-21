@@ -34,47 +34,44 @@ retro::CoreOptions retro::core_options {
     {
         {
             "use_options",
-            "Core: Enable core options (restart)",
-            "Disabling core options can be useful if you prefer to use dosbox .conf files to set "
-                "configuration settings. Note that you can still use core options together with "
-                ".conf files, for example if your .conf files only contain an [autoexec] section, "
-                "or dosbox settings not yet available as core options.",
+            "内核：启用内核设置（须重启）",
+            "如果您想使用.conf文件指定设置，可禁用此处的内核设置。\n"
+                "注意：您还可以和.conf文件一起配合使用此的处内核设置，\n"
+                "例如只在.conf文件中包含[autoexec]选项，或者其他还无法在此处内核设置中更改的dosbox选项。",
             {
-                true,
-                false,
+                { true, "启用" },
+                { false, "禁用" },
             },
             true
         },
         {
             "adv_options",
-            "Core: Show all options",
-            "Show all options, including those that usually do not require changing.",
+            "内核：显示所有设置",
+            "显示所有设置，包括那些通常不需要修改的设置。",
             {
-                true,
-                false,
+                { true, "启用" },
+                { false, "禁用" },
             },
             false
         },
         {
             "mount_c_as",
-            "Core: Mount drive C as",
-            "When directly loading a DOS executable rather than a .conf file, the C drive can be "
-                "mounted to be either the executable's directory, or its parent directory. For "
-                "example, when loading DUKE3D.EXE that is located in a directory called DUKE3D, "
-                "setting this option to \"content\" will result in DOS finding the file in "
-                "C:\\DUKE3D.EXE. If this option is set to \"parent\", the file will be found in "
-                "C:\\DUKE3D\\DUKE3D.EXE instead.",
+            "内核：将C盘挂载为",
+            "当直接载入DOS可执行文件而不是.conf文件时，C盘可以挂载为可执行文件所在目录或者它的父目录。\n"
+                "例如，当载入 DUKE3D 目录中的 DUKE3D.EXE 文件时，\n"
+                "如果此选项设置为“游戏文件目录”，则DOS识别该文件为 C:\\DUKE3D.EXE，\n"
+                "如果此选项设置为“游戏文件父目录”，则该文件识别为 C:\\DUKE3D\\DUKE3D.EXE。",
             {
-                { "content", "content directory" },
-                { "parent", "parent directory of content" },
+                { "content", "游戏文件目录" },
+                { "parent", "游戏文件父目录" },
             },
             "content"
         },
         {
             "default_mount_freesize",
-            "Core: Free space for default-mounted drive C",
-            "This is the \"-freesize\" value to use for drive C when loading a DOS executable "
-                "instead of a .conf file that contains its own MOUNT command.",
+            "内核：缺省挂载C盘的剩余空间",
+            "该项是直接加载DOS可执行文件时C盘的剩余空间，\n"
+                "等同于使用.conf文件加载时MOUNT指令的\"-freesize\"参数值。",
             {
                 { 256, "256MB" },
                 { 384, "384MB" },
@@ -89,58 +86,57 @@ retro::CoreOptions retro::core_options {
         },
         {
             "save_overlay",
-            "Core: Enable overlay file system (restart)",
-            "Enable overlay file system to redirect filesystem changes to the save directory. "
-                "Disable if you have problems starting some games.",
+            "内核：启用覆盖文件系统（须重启）",
+            "启用覆盖文件系统可以重定向文件系统更改到存档目录。\n"
+            "如果启动游戏时遇到问题可以尝试禁用此项。",
             {
-                true,
-                false,
+                { true, "启用" },
+                { false, "禁用" },
             },
             false
         },
         {
             "core_timing",
-            "Core: Timing mode",
-            "External mode is the recommended setting. It enables the frontend to drive frame "
-                "pacing. It has no input lag and allows frontend features like DRC and Frame Delay "
-                "to work correctly. Internal mode runs out of sync with the frontend. This allows "
-                "for 60FPS output when running 70FPS games, but input lag and stutter/judder are "
-                "increased. Use only if you absolutely need 60FPS output with no tearing in 70FPS "
-                "games. ",
+            "内核：时序模式",
+            "外部模式是建议设置，此模式使前端可以控制帧数调配，\n"
+            "没有输入延迟，并且允许前端功能比如动态帧率控制和帧延迟正常工作。\n"
+            "内部模式和前端不同步运行，此模式允许以60FPS的输出运行70FPS的游戏，\n"
+            "但是输入延迟和顿挫/抖动会增加。\n"
+            "只有在你绝对需要以60FPS的输出运行70FPS游戏且不产生画面撕裂的情况下时使用此模式。",
             {
-                "external",
-                { "internal", "internal (fixed 60FPS)" },
+                { "external", "外部模式" },
+                { "internal", "内部模式（固定60FPS）" },
             },
             "external"
         },
         {
             "thread_sync",
-            "Core: Thread synchronization method",
-            "\"Wait\" is the recommended method and should work well on most systems. If for some "
-                "reason it doesn't and you're seeing stutter, setting this to \"spin\" might help "
-                "(or it might make it worse.) However, \"spin\" will also result in 100% usage on "
-                "one of your CPU cores. This is \"idle load\" and doesn't increase CPU "
-                "temperatures by much, but it will prevent the CPU from clocking down which on "
-                "laptops will affect battery life. ",
+            "内核：线程同步方式",
+            "“等待”是建议的方式，此方式在大多数系统上工作良好。\n"
+                "如果因为某些原因此方式不能很好工作并且你能察觉到顿挫，\n"
+                "设置为“轮询”方式可能会有帮助（也可能变得更糟）\n"
+                "然而，“轮询”方式会使某个CPU核心占用率为100%，\n "
+                "这是一种“空载”，并不会太大的增加CPU发热量，\n"
+                "但是它会阻止CPU降频，在笔记本系统上会影响电池续航寿命。",
             {
-                "wait",
-                "spin",
+                { "wait", "等待" },
+                { "spin", "轮询" },
             },
             "wait"
         },
         {
             "machine_type",
-            "System: Emulated machine (restart)",
-            "The type of video hardware DOSBox will emulate.",
+            "系统：模拟显示硬件（须重启）",
+            "DOSBox模拟的视频硬件类型。",
             {
-                { "hercules", "Hercules" },
+                { "hercules", "大力神显示器" },
                 { "cga", "CGA" },
                 { "tandy", "Tandy" },
                 { "pcjr", "PCjr" },
                 { "ega", "EGA" },
                 { "vgaonly", "VGA" },
                 { "svga_s3", "SVGA (S3 Trio64)" },
-                { "vesa_nolfb", "SVGA (S3 Trio64 no-line buffer hack)" },
+                { "vesa_nolfb", "SVGA (S3 Trio64 无行缓冲破解)" },
                 { "vesa_oldvbe", "SVGA (S3 Trio64 VESA 1.3)" },
                 { "svga_et3000", "SVGA (Tseng Labs ET3000)" },
                 { "svga_et4000", "SVGA (Tseng Labs ET4000)" },
@@ -150,59 +146,57 @@ retro::CoreOptions retro::core_options {
         },
         {
             "machine_hercules_palette",
-            "System: Hercules color mode",
-            "The color scheme for hercules emulation.",
+            "系统：大力神色彩模式",
+            "大力神模拟的色彩方案。",
             {
-                { 0, "black & white" },
-                { 1, "black & amber" },
-                { 2, "black & green" },
+                { 0, "黑色和白色" },
+                { 1, "黑色和琥珀色" },
+                { 2, "黑色和绿色" },
             },
             0
         },
         {
             "machine_cga_composite_mode",
-            "System: CGA composite mode toggle",
-            "Enable or disable CGA composite mode.",
+            "系统：CGA复合模式切换",
+            "启用或禁用CGA复合模式。",
             {
-                { 0, "auto" },
-                { 1, "true" },
-                { 2, "false" },
+                { 0, "自动" },
+                { 1, "启用" },
+                { 2, "禁用" },
             },
             0
         },
         {
             "machine_cga_model",
-            "System: CGA model",
-            "They type of CGA model in the emulated system.",
+            "系统：CGA型号",
+            "模拟系统的CGA型号。",
             {
-                { 0, "late" },
-                { 1, "early" },
+                { 0, "晚期型号" },
+                { 1, "早期型号" },
             },
             0
         },
         #ifdef WITH_VOODOO
         {
             "voodoo",
-            "System: 3dfx Voodoo emulation (restart)",
-            "This emulates the actual 3dfx hardware. This is not a glide emulator and as a result "
-                "a glide wrapper is neither needed nor supported.\n"
-                "Only slow (VERY slow), software-based emulation is supported at the moment. It is "
-                "probably not possible to get playable speeds in most games.",
+            "系统：3dfx Voodoo模拟（须重启）",
+            "模拟真实3dfx硬件，不是模拟glide API，因此不需要也不支持glide封装模拟。\n"
+            "当前只支持慢速（非常慢）的软件模拟方式，绝大多数游戏还不能达到可玩的速度。",
             {
             // Not implemented yet.
             #if 0
                 "opengl",
             #endif
-                "software",
-                { false, "none" },
+                { "software", "软件模拟" },
+                { false, "无" },
             },
             false
         },
         {
             "voodoo_memory_size",
-            "System: Voodoo memory size (restart)",
-            "The amount of memory that the emulated Voodoo card has. 4MB is the standard memory "
-                "configuration for the original Voodoo. 12MB is a non-standard configuration.",
+            "系统：Voodoo卡显存大小（须重启）",
+            "模拟Voodoo卡的显存大小。\n"
+            "4MB是原始Voodoo卡的标准配置，12MB是非标准配置。",
             {
                 { "standard", "4MB" },
                 { "max", "12MB" },
@@ -212,10 +206,9 @@ retro::CoreOptions retro::core_options {
         #endif
         {
             "memory_size",
-            "System: Memory size (restart)",
-            "The amount of memory that the emulated machine has. This value is best left at its "
-                "default to avoid problems with some games, though few games might require a higher "
-                "value.",
+            "系统：内存大小（须重启）",
+            "模拟机器的系统内存大小。\n"
+            "该项最好保持缺省值以避免部分游戏出现问题，但是少数游戏可能需要更大的内存。",
             {
                 { 4, "4MB" },
                 { 8, "8MB" },
@@ -229,104 +222,98 @@ retro::CoreOptions retro::core_options {
         },
         {
             "cpu_core",
-            "System: CPU core",
-            "CPU core used for emulation. "
+            "系统：CPU内核",
+            "用于CPU模拟的内核。"
         #if defined(C_DYNREC) || defined(C_DYNAMIC_X86)
-                "When set to \"auto\", the \"normal\" interpreter core will be used for real mode "
-                "games, while the faster \"dynamic\" recompiler core will be used for protected "
-                "mode games. The \"simple\" interpreter core is optimized for old real mode games.",
+            "设为“自动”时，“正常”解释器内核将用于实模式游戏，\n"
+            "而更快的“动态”重编译内核将用于保护模式游戏。\n"
+            "“简单”解释器内核是为老的实模式游戏优化的内核。",
             {
-                "auto",
+                { "auto", "自动" },
             #if defined(C_DYNREC)
-                { "dynamic", "dynamic (generic recompiler)" },
+                { "dynamic", "动态重编译器（通用）" },
             #else
-                { "dynamic", "dynamic (x86 recompiler)" },
+                { "dynamic", "动态重编译器（X86）" },
             #endif
-                "normal",
-                "simple",
+                { "normal", "正常解释器" },
+                { "simple", "简单解释器" },
             },
             "auto"
         #else
-            "\"Simple\" is optimized for old real-mode games. (There are no dynamic recompiler "
-                "cores available on this platform.)",
+            "“简单”解释器内核是为老的实模式游戏优化的。\n"
+            "（当前平台没有可用的动态重编译内核）",
             {
-                "normal",
-                "simple",
+                { "normal", "正常解释器" },
+                { "simple", "简单解释器" },
             },
             "normal"
         #endif
         },
         {
             "cpu_type",
-            "System: CPU type",
-            "Emulated CPU type. \"Auto\" is the fastest choice.",
+            "系统：CPU类型",
+            "模拟的CPU类型。“自动”是最快的选择。",
             {
-                "auto",
+                { "auto", "自动" },
                 "386",
-                { "386_slow", "386 (slow)" },
-                { "386_prefetch", "386 (prefetch queue emulation)" },
+                { "386_slow", "386（低速）" },
+                { "386_prefetch", "386（预取队列模拟） (prefetch queue emulation)" },
                 "486",
-                { "486_slow", "486 (slow)" },
-                { "pentium_slow", "pentium (slow)" },
+                { "486_slow", "486（低速）" },
+                { "pentium_slow", "奔腾（低速）" },
             },
             "auto"
         },
         {
             "cpu_cycles_mode",
-            "System: CPU cycles mode",
-            "Method to determine the amount of emulated CPU cycles per millisecond. \"Fixed\" mode "
-                "emulates the amount of cycles you have set. \"Max\" mode will emulate as many "
-                "cycles as possible, depending on the limits you have set. You can configure a "
-                "maximum CPU load percentage as well as a cycle amount as limits. \"Auto\" will "
-                "emulate the fixed cycle amount set in the \"real mode\" cycles options when "
-                "running real mode games, while for protected mode games it will switch to \"max\" "
-                "mode. \"Fixed\" mode in combination with an appropriate cycle amount is the most "
-                "compatible setting, as \"auto\" and \"max\" have issues on many systems.",
+            "系统：CPU时钟周期模式",
+            "决定每毫秒模拟的CPU时钟周期数的方法。\n"
+            "“固定”模式运行你设置的固定周期数。\n"
+            "“最大”模式尽可能运行更多的周期数，依赖于设置的上限。可以同时设置一个最大CPU负载百分比和周期数作为限制。\n"
+            "“自动”模式在运行实模式游戏时，运行在“实模式”周期数选项中设定的固定周期数；\n"
+            "运行保护模式游戏时则切换到“最大”模式。\n"
+            "“固定”模式和适当的周期数设置组合是兼容性最好的设置，因为“自动”和“最大”模式在很多系统上有问题。",
             {
-                "auto",
-                "fixed",
-                "max",
+                { "auto", "自动" },
+                { "fixed", "固定" },
+                { "max", "最大" },
             },
             "fixed"
         },
         {
             "cpu_cycles_multiplier_realmode",
-            "System: Real mode coarse CPU cycles multiplier",
-            "Multiplier for coarse CPU cycles tuning when running real mode games in \"auto\" "
-                "cycles mode.",
+            "系统: 实模式粗略CPU周期数倍率",
+            "“自动”模式下运行实模式游戏时的CPU周期数粗略调整倍率。",
             { CYCLES_COARSE_MULTIPLIERS },
             1000
         },
         {
             "cpu_cycles_realmode",
-            "System: Real mode coarse CPU cycles value",
-            "Value for coarse CPU cycles tuning when running real mode games in \"auto\" cycles "
-                "mode.",
+            "系统：实模式粗略CPU周期基数",
+            "“自动”模式下运行实模式游戏时的CPU周期数粗略调整基数。",
             { CYCLES_VALUES },
             3
         },
         {
             "cpu_cycles_multiplier_fine_realmode",
-            "System: Real mode fine CPU cycles multiplier",
-            "Multiplier for fine CPU cycles tuning when running real mode games in \"auto\" cycles "
-                "mode.",
+            "系统: 实模式精细CPU周期数倍率",
+            "“自动”模式下运行实模式游戏时的CPU周期数精细调整倍率。",
             { CYCLES_FINE_MULTIPLIERS },
             100
         },
         {
             "cpu_cycles_fine_realmode",
-            "System: Real mode fine CPU cycles value",
-            "Value for fine CPU cycles tuning when running real mode games in \"auto\" cycles "
-                "mode.",
+            "系统: 实模式精细CPU周期基数",
+            "“自动”模式下运行实模式游戏时的CPU周期数精细调整基数。",
             { CYCLES_VALUES },
             0
         },
         {
             "cpu_cycles_limit",
-            "System: Max CPU cycles limit",
-            "Limit the maximum amount of CPU cycles used when using \"max\" mode.",
+            "系统：最大CPU周期数限制",
+            "“最大”模式的CPU周期数最大限制。",
             {
-                "none",
+                { "none", "无限制" },
                 "10%",
                 "20%",
                 "30%",
@@ -343,51 +330,48 @@ retro::CoreOptions retro::core_options {
         },
         {
             "cpu_cycles_multiplier",
-            "System: Coarse CPU cycles multiplier",
-            "Multiplier for coarse CPU cycles tuning.",
+            "系统：粗略CPU周期数倍数",
+            "CPU周期数粗略调整倍率。",
             { CYCLES_COARSE_MULTIPLIERS },
             10000
         },
         {
             "cpu_cycles",
-            "System: Coarse CPU cycles value",
-            "Value for coarse CPU cycles tuning.",
+            "系统：粗略CPU周期基数",
+            "CPU周期数粗略调整基数。",
             { CYCLES_VALUES },
             1
         },
         {
             "cpu_cycles_multiplier_fine",
-            "System: Fine CPU cycles multiplier",
-            "Multiplier for fine CPU cycles tuning.",
+            "系统：精细CPU周期数倍数",
+            "CPU周期数精细调整倍率。",
             { CYCLES_FINE_MULTIPLIERS },
             1000
         },
         {
             "cpu_cycles_fine",
-            "System: Fine CPU cycles value",
-            "Value for fine CPU cycles tuning.",
+            "系统：精细CPU周期基数",
+            "CPU周期数精细调整基数。",
             { CYCLES_VALUES },
             0
         },
         {
             "aspect_correction",
-            "Video: Aspect ratio correction.",
-            "When enabled, the aspect ratio will match that of a CRT monitor. This is required for "
-                "non-square pixel VGA resolutions to look as intended. Disable this if you want "
-                "unscaled square pixel aspect ratios, but this will result in a squashed or "
-                "stretched image.",
+            "视频：宽高比校正",
+            "启用时，宽高比会匹配对应的CRT显示器，以使非方形像素的VGA分辨率看上去和预期的一样。\n"
+            "如果你期望无缩放的方形像素宽高比，可以禁用此项，但是可能会导致图像压扁或者拉长。",
             {
-                true,
-                false,
+                { true, "启用" },
+                { false, "禁用" },
             },
             true
         },
         {
             "scaler",
-            "Video: DOSBox scaler",
-            "Built-in, CPU-based DOSBox scalers. These are provided here only as a last resort. "
-                "You should generally set this to \"none\" and instead use the scaling options and "
-                "shaders that are provided by your frontend.",
+            "视频：DOSBox缩放器",
+            "DOSBox内置的基于CPU运算的缩放器。此功能在这里提供以作为最后手段使用。\n"
+            "你通常应该把此项设置为“无”，而使用前端程序提供的缩放功能和渲染器。",
             {
                 "normal2x",
                 "normal3x",
@@ -406,48 +390,45 @@ retro::CoreOptions retro::core_options {
                 "rgb3x",
                 "scan2x",
                 "scan3x",
-                "none",
+                { "none", "无" },
             },
             "none"
         },
         {
             "joystick_force_2axis",
-            "Input: Force 2-axis/2-button",
-            "Normally, when only one port is assigned a joystick or gamepad, 4 axes and 4 buttons "
-                "are emulated on that port. Some (usually older) games however do not work "
-                "correctly without a classic 2-axis/2-button joystick.",
+            "输入：强制两轴/两键",
+            "正常情况下，当只连接了一个摇杆或手柄到时，缺省模拟4轴和4键，\n"
+            "然而有些游戏（通常是较老的游戏）只有在经典的2轴/2键摇杆下才能正常工作。",
             {
-                true,
-                false,
+                { true, "启用" },
+                { false, "禁用" },
             },
             false
         },
         {
             "joystick_timed",
-            "Input: Enable joystick timed intervals",
-            "Enable timed intervals for joystick axes. Experiment with this option if your "
-                "joystick drifts.",
+            "输入：启用摇杆定时间隔",
+            "在摇杆轴上启用定时间隔。如果你的摇杆偏移，尝试一下该选项。",
             {
-                true,
-                false,
+                { true, "启用" },
+                { false, "禁用" },
             },
             false
         },
         {
             "emulated_mouse",
-            "Input: Enable gamepad emulated mouse",
-            "Enable mouse emulation via the right stick on your gamepad.",
+            "输入：启用手柄模拟鼠标",
+            "使用手柄右摇杆模拟鼠标。",
             {
-                true,
-                false,
+                { true, "启用" },
+                { false, "禁用" },
             },
             false
         },
         {
             "emulated_mouse_deadzone",
-            "Input: Gamepad emulated mouse deadzone",
-            "Deadzone of the gamepad emulated mouse. Experiment with this value if the mouse "
-                "cursor drifts.",
+            "输入：手柄模拟鼠标死区",
+            "手柄模拟鼠标时的死区。如果鼠标光标漂移，尝试修改该选项。",
             {
                 { 0, "0%" },
                 { 5, "5%" },
@@ -461,22 +442,22 @@ retro::CoreOptions retro::core_options {
         },
         {
             "mouse_speed_factor_x",
-            "Input: Horizontal mouse sensitivity.",
-            "Experiment with this value if the mouse is too fast when moving left/right.",
+            "输入：鼠标水平方向灵敏度",
+            "如果鼠标左右移动速度太快，尝试修改此选项。",
             MOUSE_SPEED_FACTORS,
             "1.00"
         },
         {
             "mouse_speed_factor_y",
-            "Input: Vertical mouse sensitivity.",
-            "Experiment with this value if the mouse is too fast when moving up/down.",
+            "输入：鼠标垂直方向灵敏度",
+            "如果鼠标上下移动速度太快，尝试修改此选项。",
             MOUSE_SPEED_FACTORS,
             "1.00"
         },
         {
             "sblaster_type",
-            "Sound: SoundBlaster type",
-            "Type of emulated SoundBlaster card.",
+            "声音：声霸卡型号",
+            "模拟声霸卡的型号。",
             {
                 { "sb1", "SoundBlaster 1.0" },
                 { "sb2", "SoundBlaster 2.0" },
@@ -484,14 +465,14 @@ retro::CoreOptions retro::core_options {
                 { "sbpro2", "SoundBlaster Pro 2" },
                 { "sb16", "SoundBlaster 16" },
                 { "gb", "GameBlaster" },
-                { "none", "none" },
+                { "none", "无" },
             },
             "sb16"
         },
         {
             "sblaster_base",
-            "Sound: SoundBlaster Base Address",
-            "The I/O address for the emulated SoundBlaster card.",
+            "声音：声霸卡基地址",
+            "模拟声霸卡的I/O地址。",
             {
                 "220",
                 "240",
@@ -506,8 +487,8 @@ retro::CoreOptions retro::core_options {
         },
         {
             "sblaster_irq",
-            "Sound: SoundBlaster IRQ Number",
-            "The IRQ number for the emulated SoundBlaster card.",
+            "声音：声霸卡IRQ号",
+            "模拟声霸卡的IRQ中断号。",
             {
                 3,
                 5,
@@ -521,8 +502,8 @@ retro::CoreOptions retro::core_options {
         },
         {
             "sblaster_dma",
-            "Sound: SoundBlaster DMA Number",
-            "The DMA number for the emulated SoundBlaster card.",
+            "声音：声霸卡DMA通道",
+            "模拟声霸卡的DMA通道号。",
             {
                 0,
                 1,
@@ -535,8 +516,8 @@ retro::CoreOptions retro::core_options {
         },
         {
             "sblaster_hdma",
-            "Sound: SoundBlaster High DMA Number",
-            "The High DMA number for the emulated SoundBlaster card.",
+            "声音：声霸卡高位DMA通道",
+            "模拟声霸卡的高位DMA通道号。",
             {
                 0,
                 1,
@@ -549,48 +530,47 @@ retro::CoreOptions retro::core_options {
         },
         {
             "sblaster_opl_mode",
-            "Sound: SoundBlaster OPL mode",
-            "The SoundBlaster emulated OPL mode. All modes are Adlib compatible except cms.",
+            "声音：声霸卡OPL模式",
+            "模拟声霸卡的OPL模式。除CMS模式外其他模式都和Adlib兼容。",
             {
-                { "auto", "auto (select based on the SoundBlaster type)" },
+                { "auto", "自动（基于声霸卡型号自动选择）" },
                 { "cms", "CMS (Creative Music System / GameBlaster)" },
                 { "opl2", "OPL-2 (AdLib / OPL-2 / Yamaha 3812)" },
-                { "dualopl2", "Dual OPL-2 (used by SoundBlaster Pro 1.0 for stereo sound)" },
+                { "dualopl2", "Dual OPL-2 (用于 SoundBlaster Pro 1.0 立体声输出)" },
                 { "opl3", "OPL-3 (AdLib / OPL-3 / Yamaha YMF262)" },
                 { "opl3gold", "OPL-3 Gold (AdLib Gold / OPL-3 / Yamaha YMF262)" },
-                "none",
+                { "none", "无" },
             },
             "auto"
         },
         {
             "sblaster_opl_emu",
-            "Sound: SoundBlaster OPL provider",
-            "\"Nuked OPL3\" is a cycle-accurate OPL3 (YMF262) emulator. It offers the best "
-                "quality, but is quite demanding on the CPU. \"Compat\" is the next best option. "
-                "It is less accurate, but also less demanding.",
+            "声音：声霸卡OPL驱动",
+            "“Nuked OPL3”是精确时钟周期模拟的 OPL3 (YMF262) 模拟器，\n"
+            "提供最好的音质，但是极度依吃CPU。\n"
+            "“兼容模式”是第二好的选择，精确性稍低，但也较少吃CPU。",
             {
                 { "nuked", "Nuked OPL3" },
-                "compat",
-                "mame",
-                "fast",
+                { "compat", "兼容模式" },
+                { "mame", "MAME模式" },
+                { "fast", "快速模式" },
             },
             "compat"
         },
         {
             "gus",
-            "Sound: Gravis Ultrasound support",
-            "Enables Gravis Ultrasound emulation. The ULTRADIR directory is not configurable. It "
-                "is always set to C:\\ULTRASND.",
+            "声音：Gravis Ultrasound支持",
+            "启用Gravis Ultrasound模拟。ULTRADIR目录不可更改，固定为 C:\\ULTRASND",
             {
-                true,
-                false,
+                { true, "启用" },
+                { false, "禁用" },
             },
             false
         },
         {
             "gusrate",
-            "Sound: Ultrasound sample rate",
-            "Gravis Ultrasound emulation sample rate.",
+            "声音：Ultrasound采样率",
+            "Gravis Ultrasound模拟采样率。",
             {
                 8000,
                 11025,
@@ -605,8 +585,8 @@ retro::CoreOptions retro::core_options {
         },
         {
             "gusbase",
-            "Sound: Ultrasound IO address",
-            "The IO base address for the emulated Gravis Ultrasound card.",
+            "声音：Ultrasound I/O地址",
+            "模拟Gravis Ultrasound卡的I/O基地址。",
             {
                 "220",
                 "240",
@@ -621,8 +601,8 @@ retro::CoreOptions retro::core_options {
         },
         {
             "gusirq",
-            "Sound: Ultrasound IRQ",
-            "The IRQ number for the emulated Gravis Ultrasound card.",
+            "声音：Ultrasound IRQ号",
+            "模拟Gravis Ultrasound卡的IRQ中断号。",
             {
                 3,
                 5,
@@ -636,8 +616,8 @@ retro::CoreOptions retro::core_options {
         },
         {
             "gusdma",
-            "Sound: Ultrasound DMA",
-            "The DMA channel for the emulated Gravis Ultrasound card.",
+            "声音：Ultrasound DMA通道",
+            "模拟Gravis Ultrasound卡的DMA通道号。",
             {
                 0,
                 1,
@@ -650,10 +630,10 @@ retro::CoreOptions retro::core_options {
         },
         {
             "mpu_type",
-            "Sound: MPU-401 type",
-            "Type of MPU-401 MIDI interface to emulate. \"Intelligent\" mode is the best choice.",
+            "声音：MPU-401类型",
+            "模拟MPU-401 MIDI接口的类型。“智能选择”模式是最佳选择。",
             {
-                "intelligent",
+                { "intelligent", "智能选择" },
                 { "uart", "UART" },
                 "none",
             },
@@ -661,15 +641,13 @@ retro::CoreOptions retro::core_options {
         },
         {
             "midi_driver",
-            "Sound: MIDI driver",
-            "The MT-32 emulation driver uses Munt and needs the correct ROMs in the frontend's "
-                "system directory.\n"
+            "声音：MIDI驱动",
+            "MT-32模拟驱动使用Munt，需要把正确的ROM文件放到system目录下。\n"
             #ifdef WITH_BASSMIDI
-                "For BASSMIDI, you need to download the BASS and BASSMIDI libraries for your OS "
-                "from https://www.un4seen.com and place them in the frontend's system directory.\n"
+            "对于BASSMIDI，需要从 https://www.un4seen.com\n"
+            "下载和操作系统对应的BASS和BASSMIDI库，并且放到system目录下。\n"
             #endif
-                "The libretro driver forwards MIDI to the frontend, in which case you need to "
-                "configure MIDI output there.",
+            "libretro驱动转发MIDI到前端程序，需要到RA设置里配置MIDI输出。",
             {
             #ifdef HAVE_ALSA
                 { "alsa", "ALSA" },
@@ -683,39 +661,39 @@ retro::CoreOptions retro::core_options {
             #ifdef WITH_FLUIDSYNTH
                 { "fluidsynth", "FluidSynth" },
             #endif
-                { "mt32", "MT-32 emulator" },
+                { "mt32", "MT-32模拟器" },
                 "libretro",
-                "none",
+                { "none", "无" },
             },
             "none"
         },
         #ifdef HAVE_ALSA
         {
             "midi_port",
-            "Sound: ALSA MIDI port",
-            "ALSA port to send MIDI to."
+            "声音：ALSA MIDI端口",
+            "发送MIDI到ALSA驱动的端口。"
             // No values. We detect and set MIDI ports at runtime.
         },
         #endif
         #ifdef __WIN32__
         {
             "midi_port",
-            "Sound: Windows MIDI port",
-            "Windows port to send MIDI to."
+            "声音：Windows MIDI端口",
+            "发送MIDI到Windows驱动的端口。"
             // No values. We detect and set MIDI ports at runtime.
         },
         #endif
         #ifdef WITH_BASSMIDI
         {
             "bassmidi.soundfont",
-            "Sound (BASSMIDI): Soundfont",
-            "Soundfonts are looked for in the \"soundfonts\" directory inside the frontend's "
-                "system directory. Supported formats are SF2 and SFZ.",
+            "声音 (BASSMIDI)：音色库",
+            "音色库文件存放在system目录下的 \"soundfonts\" 目录中。\n"
+            "支持SF2和SFZ格式。",
             // No values. We scan for soundfonts at runtime.
         },
         {
             "bassmidi.sfvolume",
-            "Sound (BASSMIDI): Soundfont volume",
+            "声音 (BASSMIDI)：音色库音量",
             {
                 "0.0",
                 "0.1",
@@ -754,9 +732,8 @@ retro::CoreOptions retro::core_options {
         },
         {
             "bassmidi.voices",
-            "Sound (BASSMIDI): Voice count",
-            "Maximum number of samples that can play together. This is not the same thing as the "
-                "maximum number of notes; multiple samples may be played for a single note. ",
+            "声音 (BASSMIDI)：发音数",
+            "最大同时播放的乐器数。这不同于最大音符数，多个乐器可以同时演奏同一个音符。",
             {
                 20,
                 30,
@@ -790,16 +767,15 @@ retro::CoreOptions retro::core_options {
         #ifdef WITH_FLUIDSYNTH
         {
             "fluid.soundfont",
-            "Sound (FluidSynth): Soundfont",
-            "Soundfonts are looked for in the \"soundfonts\" directory inside the frontend's "
-                "system directory. Supported formats are SF2, SF3, DLS and GIG. SF2 and SF3 are "
-                "the recommended formats.",
+            "声音 (FluidSynth)：音色库",
+            "音色库文件存放在system目录下的 \"soundfonts\" 目录中。\n"
+            "支持SF2, SF3, DLS和GIG格式。推荐使用SF2和SF3格式。",
             // No values. We scan for soundfonts at runtime.
         },
         {
             "fluid.samplerate",
-            "Sound (FluidSynth): Sample rate",
-            "The sample rate of the audio generated by the synthesizer.",
+            "声音 (FluidSynth)：采样率",
+            "合成器生成的音频采样率。",
             {
                 { 8000, "8kHz" },
                 { 11025, "11.025kHz" },
@@ -814,10 +790,9 @@ retro::CoreOptions retro::core_options {
         },
         {
             "fluid.gain",
-            "Sound (FluidSynth): Volume gain",
-            "The volume gain is applied to the final output of the synthesizer. Usually this needs "
-                "to be rather low (0.2-0.5) for most soundfonts to avoid audio clipping and "
-                "distortion. ",
+            "声音 (FluidSynth)：音量增益",
+            "音量增益应用于合成器的最终输出。\n"
+            "此值通常应该较低 (0.2-0.5)，以避免引起音频削峰和失真。",
             {
                 "0.0",
                 "0.1",
@@ -856,9 +831,8 @@ retro::CoreOptions retro::core_options {
         },
         {
             "fluid.polyphony",
-            "Sound (FluidSynth): Polyphony",
-            "The polyphony defines how many voices can be played in parallel. Higher values are "
-                "more CPU intensive.",
+            "声音 (FluidSynth)： 复音数",
+            "复音数蒂尼可以同时播放的乐器数。值越高越耗CPU。",
             {
                 1,
                 2,
@@ -882,10 +856,8 @@ retro::CoreOptions retro::core_options {
         },
         {
             "fluid.cores",
-            "Sound (FluidSynth): CPU cores",
-            "Sets the number of synthesis CPU cores. If set to a value greater than 1, then "
-                "additional synthesis threads will be created to take advantage of a multi CPU or "
-                "CPU core system.",
+            "声音 (FluidSynth)：CPU内核数",
+            "设置合成器使用的CPU内核数。如果设置大于1，将创建附加的合成器线程以利用多核CPU系统。",
             {
                 1,
                 2,
@@ -911,16 +883,16 @@ retro::CoreOptions retro::core_options {
         },
         {
             "fluid.reverb",
-            "Sound (FluidSynth): Enable reverb",
+            "声音 (FluidSynth)：启用混响",
             {
-                true,
-                false,
+                { true, "启用" },
+                { false, "禁用" },
             },
             true
         },
         {
             "fluid.reverb.roomsize",
-            "Sound (FluidSynth): Reverb room size",
+            "声音 (FluidSynth)：混响房间大小",
             {
                 "0.0",
                 "0.1",
@@ -938,7 +910,7 @@ retro::CoreOptions retro::core_options {
         },
         {
             "fluid.reverb.damping",
-            "Sound (FluidSynth): Reverb damping",
+            "声音 (FluidSynth)：混响衰减率",
             {
                 "0.0",
                 "0.1",
@@ -956,7 +928,7 @@ retro::CoreOptions retro::core_options {
         },
         {
             "fluid.reverb.width",
-            "Sound (FluidSynth): Reverb width",
+            "声音 (FluidSynth)：混响宽度",
             {
                 "0.0",
                 "0.1",
@@ -1010,7 +982,7 @@ retro::CoreOptions retro::core_options {
         },
         {
             "fluid.reverb.level",
-            "Sound (FluidSynth): Reverb level",
+            "声音 (FluidSynth)：混响级别",
             {
                 "0.0",
                 "0.1",
@@ -1028,16 +1000,16 @@ retro::CoreOptions retro::core_options {
         },
         {
             "fluid.chorus",
-            "Sound (FluidSynth): Enable chorus",
+            "声音 (FluidSynth)：启用和声",
             {
-                true,
-                false,
+                { true, "启用" },
+                { false, "禁用" },
             },
             true
         },
         {
             "fluid.chorus.number",
-            "Sound (FluidSynth): Chorus voices",
+            "声音 (FluidSynth)：和声数",
             {
                 0,
                 1,
@@ -1067,7 +1039,7 @@ retro::CoreOptions retro::core_options {
         },
         {
             "fluid.chorus.level",
-            "Sound (FluidSynth): Chorus level",
+            "声音 (FluidSynth)：和声级别",
             {
                 "0.0",
                 "0.2",
@@ -1104,7 +1076,7 @@ retro::CoreOptions retro::core_options {
         },
         {
             "fluid.chorus.speed",
-            "Sound (FluidSynth): Chorus speed",
+            "声音 (FluidSynth)：和声速度",
             {
                 "0.1",
                 "0.2",
@@ -1161,7 +1133,7 @@ retro::CoreOptions retro::core_options {
         },
         {
             "fluid.chorus.depth",
-            "Sound (FluidSynth): Chorus depth",
+            "声音 (FluidSynth)：和声深度",
             {
                 0,
                 1,
@@ -1202,11 +1174,10 @@ retro::CoreOptions retro::core_options {
         #endif
         {
             "mt32.type",
-            "Sound (MT-32): Hardware type",
-            "Type of MT-32 module to emulate. MT-32 is the older, original model. The CM-32L "
-                "and LAPC-I are later models that provide some extra instruments not found on the "
-                "original MT-32. Some games make use of these extra sounds and won't sound correct "
-                "on the original MT-32.",
+            "声音 (MT-32)：硬件型号",
+            "模拟MT-32的型号。MT-32是老的原始型号；\n"
+            "CM-32L和LAPC-I是后期型号，提供了一些老型号没有的额外的乐器音色库。\n"
+            "某些使用这些额外音色的游戏在原始MT-32型号上不能正确发声。",
             {
                 { "mt32", "MT-32" },
                 { "cm32l", "CM-32L/LAPC-I" },
@@ -1215,28 +1186,27 @@ retro::CoreOptions retro::core_options {
         },
         {
             "mt32.reverse.stereo",
-            "Sound (MT-32): Reverse stereo channels",
+            "声音 (MT-32)：反转立体声声道",
             {
-                true,
-                false,
+                { true, "启用" },
+                { false, "禁用" },
             },
             false
         },
         {
             "mt32.thread",
-            "Sound (MT-32): Threaded emulation",
-            "Run MT-32 emulation in its own thread. Improves performance on multi-core CPUs.",
+            "声音 (MT-32)：多线程模拟",
+            "用独立线程运行MT-32模拟。在多核系统上可提高性能。",
             {
-                true,
-                false,
+                { true, "启用" },
+                { false, "禁用" },
             },
             false
         },
         {
             "mt32.chunk",
-            "Sound (MT-32): Threaded chunk size",
-            "Minimum milliseconds of data to render at once. Increasing this value reduces "
-                "rendering overhead which may improve performance but also increases audio lag.",
+            "声音 (MT-32)：线程分块大小",
+            "同时渲染的数据最小毫秒数。增加此值可减小渲染额外消耗，提升性能，但是也会增加音频延迟。",
             {
                 { 2, "2ms" },
                 { 3, "3ms" },
@@ -1261,10 +1231,9 @@ retro::CoreOptions retro::core_options {
         },
         {
             "mt32.prebuffer",
-            "Sound (MT-32): Threaded prebuffer size",
-            "How many milliseconds of data to render ahead. Increasing this value may help to "
-                "avoid underruns but also increases audio lag. Cannot be set less than or equal to "
-                "the chunk size value.",
+            "声音 (MT-32)：线程预缓冲大小",
+            "提前渲染的毫秒数。增加此值可有助于避免欠载运行，但是也会增加音频延迟。\n"
+            "不能小于等于分块大小。",
             {
                 { 3, "3ms" },
                 { 4, "4ms" },
@@ -1294,11 +1263,10 @@ retro::CoreOptions retro::core_options {
         },
         {
             "mt32.partials",
-            "Sound (MT-32): Max partials",
-            "The maximum number of partials playing simultaneously. A value of 32 matches real "
-                "MT-32 hardware. Lowering this value increases performance at the cost of notes "
-                "getting cut off sooner. Increasing it allows more notes to stay audible compared "
-                "to real hardware at the cost of performance.",
+            "声音 (MT-32)：最大音部数",
+            "同时播放的最大音部数, 32等同于真实MT-32硬件。\n"
+            "降低此值可提高性能，代价是音符被很快切断。\n"
+            "增加此值可使音符比真实硬件保持更长的时间，代价是牺牲性能。",
             {
                 8,
                 9,
@@ -1331,63 +1299,54 @@ retro::CoreOptions retro::core_options {
         },
         {
             "mt32.dac",
-            "Sound (MT-32): DAC input emulation mode",
-            "High quality: Produces samples at double the volume, without tricks. Higher quality "
-                "than the real devices.\n"
-                "Pure: Produces samples that exactly match the bits output from the emulated LA32. "
-                "Nicer overdrive characteristics than the DAC hacks (it simply clips samples "
-                "within range.) Much less likely to overdrive than any other mode. Half the volume "
-                "of any of the other modes.\n"
-                "Gen 1: Re-orders the LA32 output bits as in the early generation MT-32.\n"
-                "Gen 2: Re-orders the LA32 output bits as in the later generations MT-32 and "
-                "CM-32Ls.",
+            "声音 (MT-32)：DAC输入模拟模式",
+            "高质量：以双倍音量产生采样，不做任何取巧，比真实设备质量更高。\n"
+            "单纯: 产生和模拟LA32输出完全匹配的采样。比DAC修改（简单的削除范围内的取样）\n"
+            "有更好地抗过载特性，相对其他模式更加不容易过载。音量是其他模式的一半。\n"
+            "类型 1: 以早期MT-32的输出方式重新排序LA32比特输出。\n"
+            "类型 2: 以后期MT-32和CM-32Ls的输出方式重新排序LA32的比特输出。",
             {
-                { 0, "high quality" },
-                { 1, "pure" },
-                { 2, "gen 1" },
-                { 3, "gen 2" },
+                { 0, "高质量" },
+                { 1, "单纯" },
+                { 2, "类型 1" },
+                { 3, "类型 2" },
             },
             0
         },
         {
             "mt32.analog",
-            "Sound (MT-32): Analog output emulation mode",
-            "Digital: Only digital path is emulated. The output samples correspond to the digital "
-                "output signal appeared at the DAC entrance. Fastest mode.\n"
-                "Coarse: Coarse emulation of LPF circuit. High frequencies are boosted, sample "
-                "rate remains unchanged. A bit better sounding but also a bit slower.\n"
-                "Accurate: Finer emulation of LPF circuit. Output signal is upsampled to 48 kHz to "
-                "allow emulation of audible mirror spectra above 16 kHz, which is passed through "
-                "the LPF circuit without significant attenuation. Sounding is closer to the analog "
-                "output from real hardware but also slower than \"digital\" and \"coarse\".\n"
-                "Oversampled: Same as \"accurate\" but the output signal is 2x oversampled, i.e. "
-                "the output sample rate is 96 kHz. Even slower than all the other modes but better "
-                "retains highest frequencies while further resampled in DOSBox mixer.",
+            "声音 (MT-32)：模拟输出模式",
+            "数字：只模拟数字路径。输出采样只反映DAC入口的数字输出信号，这是最快的模式。\n"
+            "粗略：粗略模拟LPF电路。高频被增强，采样率保持不变。声音更好一点，速度更慢一点。\n"
+            "精确：更精确地模拟LPF电路。输出信号采样率提高到48kHz，\n"
+            "以允许模拟可听见的16kHz以上的镜像频谱，这些信号通过LPF电路不会产生显著衰减。\n"
+            "声音效果更接近于真实硬件的模拟输出，但是比“数字”和“粗略”模式更慢。\n"
+            "过采样：和“精确”相同，但是输出信号被2倍过采样，即96kHz。此模式比所有其他模式都慢，\n"
+            "但是在DOSBox混音器中进一步重采样时，能更好的保留高频信号。",
             {
-                { 0, "digital" },
-                { 1, "coarse" },
-                { 2, "accurate" },
-                { 3, "oversampled" },
+                { 0, "数字" },
+                { 1, "粗略" },
+                { 2, "精确" },
+                { 3, "过采样" },
             },
             2
         },
         {
             "mt32.reverb.mode",
-            "Sound (MT-32): Reverb mode",
-            "Reverb emulation mode. \"Auto\" will automatically adjust reverb parameters to match "
-                "the loaded control ROM version.",
+            "声音 (MT-32)：混响模式",
+            "混响模拟模式。“自动”模式自动调整混响模式以匹配加载的控制ROM版本。",
             {
-                { "auto" },
-                { 0, "room" },
-                { 1, "hall" },
-                { 2, "plate" },
-                { 3, "tap delay" },
+                { "auto", "自动" },
+                { 0, "房间" },
+                { 1, "大厅" },
+                { 2, "广场" },
+                { 3, "节拍延迟" },
             },
             "auto"
         },
         {
             "mt32.reverb.time",
-            "Sound (MT-32): Reverb decay time",
+            "声音 (MT-32)：混响衰减时间",
             {
                 0,
                 1,
@@ -1402,7 +1361,7 @@ retro::CoreOptions retro::core_options {
         },
         {
             "mt32.reverb.level",
-            "Sound (MT-32): Reverb level",
+            "声音 (MT-32)：混响级别",
             {
                 0,
                 1,
@@ -1417,7 +1376,7 @@ retro::CoreOptions retro::core_options {
         },
         {
             "mt32.rate",
-            "Sound (MT-32): Sample rate",
+            "声音 (MT-32)：采样率",
             {
                 { 8000, "8kHz" },
                 { 11025, "11.025kHz" },
@@ -1432,63 +1391,61 @@ retro::CoreOptions retro::core_options {
         },
         {
             "mt32.src.quality",
-            "Sound (MT-32): Resampling quality",
+            "声音 (MT-32)：重采样质量",
             {
-                { 0, "fastest" },
-                { 1, "fast" },
-                { 2, "good" },
-                { 3, "best" },
+                { 0, "最快" },
+                { 1, "快速" },
+                { 2, "好" },
+                { 3, "最好" },
             },
             2
         },
         {
             "mt32.niceampramp",
-            "Sound (MT-32): Nice amp ramp",
-            "Improves amplitude ramp for sustaining instruments. Quick changes of volume or "
-                "expression on a MIDI channel may result in amp jumps on real hardware. Enabling "
-                "this option prevents this from happening. Disabling this options preserves "
-                "emulation accuracy.",
+            "声音 (MT-32)：高质量增益曲线",
+            "增强增益曲线以保持音乐平稳。在真实硬件上，快速改变某个MIDI通道的音量或表现可能产生增益跳跃，\n"
+            "启用此项可以阻止这种情况发生，禁用此项则保持模拟的精确性。",
             {
-                true,
-                false,
+                { true, "启用" },
+                { false, "禁用" },
             },
             true
         },
         {
             "pcspeaker",
-            "Sound: Enable PC speaker",
-            "Enable PC speaker emulation.",
+            "声音：启用PC喇叭",
+            "启用PC喇叭模拟（旧式主板上的小喇叭）",
             {
-                true,
-                false,
+                { true, "启用" },
+                { false, "禁用" },
             },
             true
         },
         {
             "tandy",
-            "Sound: Enable Tandy Sound System",
-            "Enable Tandy Sound System Emulation. Auto only works if machine is set to tandy.",
+            "声音：启用Tandy声音系统",
+            "启用Tandy声音系统模拟。“自动”模式只有当机器类型设为Tandy时有效。",
             {
-                "auto",
-                { "on", "true" },
-                { "off", "false" },
+                { "auto", "自动" },
+                { "on", "启用" },
+                { "off", "禁用" },
             },
             "off"
         },
         {
             "disney",
-            "Sound: Enable Disney Sound Source",
-            "Enable Disney Sound Source Emulation.",
+            "声音：启用Disney音源",
+            "启用Disney音源模拟。",
             {
-                { "on", "true" },
-                { "off", "false" },
+                { "on", "启用" },
+                { "off", "禁用" },
             },
             "off"
         },
         {
             "blocksize",
-            "Sound: Mixer block size (restart)",
-            "Larger blocks might help sound stuttering but sound will also be more lagged.",
+            "声音：混音器块大小（须重启）",
+            "更大的块有助于改善声音顿挫，但是会增加延迟。",
             {
                 256,
                 512,
@@ -1501,8 +1458,8 @@ retro::CoreOptions retro::core_options {
         },
         {
             "prebuffer",
-            "Sound: Mixer pre-buffer size (restart)",
-            "How many milliseconds of data to keep on top of the blocksize.",
+            "声音：混音器预缓存大小（须重启）",
+            "在块大小顶端保留的声音数据毫秒数。",
             {
                 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 16, 18, 20, 22, 24, 25, 26, 28,
                 30, 32, 36, 40, 44, 48, 56, 64, 72, 80, 88, 96, 100
@@ -1511,34 +1468,34 @@ retro::CoreOptions retro::core_options {
         },
         {
             "ipx",
-            "Network: Enable IPX",
-            "Enable IPX over UDP tunneling.",
+            "网络: 启用IPX",
+            "启用UDP上的IPX隧道。",
             {
-                true,
-                false,
+                { true, "启用" },
+                { false, "禁用" },
             },
             false
         },
         {
             "log_method",
-            "Logging: Output method",
-            "Where to send log output. \"Frontend\" will send it to the frontend, while "
-                "\"stdout/stderr\" will print it to standard output or standard error (warnings "
-                "and errors go to stderr, debug and informational messages to stdout.)",
+            "日志：输出方式",
+            "向哪里发送日志输出。“前端”方式发送日志到前端程序。\n"
+            "“stdout/stderr”方式打印日志输出到标准输出设备或标准错误设备\n"
+            "（警告和错误发送到标准错误设备，调试和信息发送到标准输出设备）",
             {
-                "frontend",
-                "stdout/stderr",
+                { "frontend", "前端" },
+                { "stdout/stderr", "stdout/stderr"}
             },
             "frontend",
         },
         {
             "log_level",
-            "Logging: Verbosity level",
+            "日志：详细级别",
             {
-                "debug",
-                "info",
-                "warnings",
-                "errors",
+                { "debug", "调试" },
+                { "info", "信息" },
+                { "warnings", "警告" },
+                { "errors", "错误" },
             },
             "warnings",
         },
